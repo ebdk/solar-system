@@ -13,7 +13,6 @@ public class DayEntity {
 
     //ATTRIBUTES
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long date;
 
     private String weather;

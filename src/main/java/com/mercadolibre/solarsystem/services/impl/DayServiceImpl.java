@@ -1,14 +1,17 @@
 package com.mercadolibre.solarsystem.services.impl;
 
+import com.google.common.collect.ImmutableMap;
 import com.mercadolibre.solarsystem.dtos.DetailedDayDto;
 import com.mercadolibre.solarsystem.dtos.MessageResponse;
 import com.mercadolibre.solarsystem.entity.DayEntity;
 import com.mercadolibre.solarsystem.models.Day;
+import com.mercadolibre.solarsystem.models.Weather.TypeOfWeather;
 import com.mercadolibre.solarsystem.repositories.DayDAO;
 import com.mercadolibre.solarsystem.services.DayService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.PostConstruct;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -17,18 +20,6 @@ public class DayServiceImpl implements DayService {
 
     @Autowired
     private DayDAO dayRepository;
-
-
-    @Override
-    public MessageResponse sayHello() {
-        return new MessageResponse("Prueba");
-    }
-
-    @Override
-    public MessageResponse saveDay(DetailedDayDto day) {
-        dayRepository.save(new DayEntity(day));
-        return new MessageResponse("Agregado" + day.getDate() + " correctamente.");
-    }
 
     @Override
     public Day getDay(Long date) {
@@ -45,25 +36,24 @@ public class DayServiceImpl implements DayService {
         return days;
     }
 
+    @PostConstruct
     @Override
-    public com.mercadolibre.solarsystem.dtos.MessageResponse mockDays() {
-        Day day1 = new Day(1, "RAINY", 300);
-        Day day2 = new Day(2, "DRY", 0);
-        Day day3 = new Day(3, "DRY", 0);
-        Day day4 = new Day(4, "IDEAL", 30);
-        Day day5 = new Day(5, "IDEAL", 30);
-        Day day6 = new Day(6, "COMMON", 300);
-        Day day7 = new Day(7, "COMMON", 300);
-
-        dayRepository.save(new DayEntity(day1));
-        dayRepository.save(new DayEntity(day2));
-        dayRepository.save(new DayEntity(day3));
-        dayRepository.save(new DayEntity(day4));
-        dayRepository.save(new DayEntity(day5));
-        dayRepository.save(new DayEntity(day6));
-        dayRepository.save(new DayEntity(day7));
+    public MessageResponse mockDays() {
+        ImmutableMap<Integer, TypeOfWeather> map = ImmutableMap.of(0, TypeOfWeather.COMMON,
+                1, TypeOfWeather.IDEAL,
+                2, TypeOfWeather.RAINY,
+                3, TypeOfWeather.DRY);
+        for(int i = 1; i <= 3650; i++) {
+            int numberForPrecipitacion = (int)(Math.random() * ((3000) + 1));
+            int numberForChoosenEnum = (int)(Math.random() * ((3) + 1));
+            Day day = new Day(i, map.get(numberForChoosenEnum), numberForPrecipitacion);
+            dayRepository.save(new DayEntity(day));
+        }
 
 
         return new MessageResponse("Agregado days al 7.");
     }
+
+
+
 }

@@ -1,26 +1,49 @@
 package com.mercadolibre.solarsystem.controller;
 
+import com.mercadolibre.solarsystem.dtos.DayDto;
+import com.mercadolibre.solarsystem.dtos.PredictionDto;
+import com.mercadolibre.solarsystem.services.SolarSystemService;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
+import io.swagger.annotations.ApiResponse;
+import io.swagger.annotations.ApiResponses;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/weather")
+@RequestMapping("/api/weather")
 public class SolarSystemController {
 
     @Autowired
-    private com.mercadolibre.solarsystem.services.SolarSystemService service;
+    private SolarSystemService service;
 
-    @GetMapping(path="/{date}")
-    public com.mercadolibre.solarsystem.dtos.DayDto getDay(@PathVariable("date") int date) {
-        return service.predictWeather(date);
+    @ApiOperation(
+            value = "Calculates the forecast of the weather condition of a given day",
+            notes = "The forecast is limited to just 3650 days, or 10 years ")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "The forecast was calculated successfully", response = DayDto.class),
+    })
+    @GetMapping(path="/{day}", produces = org.springframework.http.MediaType.APPLICATION_JSON_VALUE)
+    @ResponseStatus(HttpStatus.OK)
+    public ResponseEntity<DayDto> forecastDay(
+            @ApiParam(value = "The day that will be predicted", allowableValues = "range[1,3600]", required = true)
+            @PathVariable("day") int day) {
+        return ResponseEntity.ok(service.predictWeather(day));
     }
 
-    @org.springframework.web.bind.annotation.GetMapping
-    public com.mercadolibre.solarsystem.dtos.PredictionDto weatherForecast() {
-        return service.weatherForecast();
+    @ApiOperation(
+            value = "Calculates the forecast of the weather condition of the next 3600 days",
+            notes = "This prediction includes: number of drought days, number of rainy days, "
+                    + "day with maximum amount of rain and days with optimum weather conditions")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "The prediction was calculated successfully", response = PredictionDto.class),
+    })
+    @GetMapping(produces = org.springframework.http.MediaType.APPLICATION_JSON_VALUE)
+    @ResponseStatus(HttpStatus.OK)
+    public ResponseEntity<PredictionDto> weatherForecast() {
+        return ResponseEntity.ok(service.weatherForecast());
     }
 
 }

@@ -8,10 +8,6 @@ import java.util.List;
 
 public interface DayService {
 
-    MessageResponse sayHello();
-
-    MessageResponse saveDay(DetailedDayDto day);
-
     Day getDay(Long date);
 
     List<Day> getAll();

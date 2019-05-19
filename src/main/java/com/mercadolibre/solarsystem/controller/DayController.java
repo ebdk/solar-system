@@ -10,31 +10,11 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/day")
+@RequestMapping("/api/day")
 public class DayController {
 
     @Autowired
     private DayService service;
-
-    @GetMapping(value = "testHelloMessage")
-    public MessageResponse sayHello() {
-        return service.sayHello();
-    }
-
-    @GetMapping(value = "inject")
-    public MessageResponse injectDays() {
-        return service.mockDays();
-    }
-
-    @PostMapping
-    public MessageResponse saveDay(@RequestBody DetailedDayDto day) {
-        return service.saveDay(day);
-    }
-
-    @GetMapping(path="/{date}")
-    public Day getDay(@PathVariable("date") Long date) {
-        return service.getDay(date);
-    }
 
     @GetMapping
     public List<Day> getAll() {

@@ -5,7 +5,9 @@ public class Weather {
     private TypeOfWeather weather;
     private double precipitation;
 
-    enum TypeOfWeather {
+
+
+    public enum TypeOfWeather {
         RAINY,
         DRY,
         IDEAL,
@@ -14,6 +16,11 @@ public class Weather {
 
     public Weather(String weather, double precipitation) {
         this.weather = TypeOfWeather.valueOf(weather);
+        this.precipitation = precipitation;
+    }
+
+    public Weather(com.mercadolibre.solarsystem.models.Weather.TypeOfWeather weather, double precipitation) {
+        this.weather = weather;
         this.precipitation = precipitation;
     }
 
