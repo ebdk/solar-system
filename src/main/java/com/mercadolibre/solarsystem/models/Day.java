@@ -26,15 +26,15 @@ public class Day {
         return date;
     }
 
-    public String getWeatherTypeString() {
+    /*public String getWeatherTypeString() {
         return weather.getWeather().toString();
-    }
+    }*/
 
-    public TypeOfWeather getWeatherType() {
+    public TypeOfWeather getWeather() {
         return weather.getWeather();
     }
 
-    public double getWeatherPrecipitation() {
+    public double getPrecipitation() {
         return weather.getPrecipitation();
     }
 

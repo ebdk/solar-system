@@ -30,7 +30,7 @@ public class SolarSystemServiceImpl implements SolarSystemService {
         List<Day> days = dayService.getAll();
         Day mostRainyDay = new Day(0, RAINY, 0);
         for(Day day : days) {
-            mostRainyDay = (day.getWeatherPrecipitation() > mostRainyDay.getWeatherPrecipitation()) ? day : mostRainyDay;
+            mostRainyDay = (day.getPrecipitation() > mostRainyDay.getPrecipitation()) ? day : mostRainyDay;
         }
         return new PredictionDto(countWeatherTypeOccurrences(days, TypeOfWeather.IDEAL),
                 countWeatherTypeOccurrences(days, TypeOfWeather.DRY),
@@ -39,7 +39,7 @@ public class SolarSystemServiceImpl implements SolarSystemService {
     }
 
     private int countWeatherTypeOccurrences(List<Day> days, TypeOfWeather typeOfWeather) {
-        return Math.toIntExact(days.stream().filter(day -> day.getWeatherType().equals(typeOfWeather)).count());
+        return Math.toIntExact(days.stream().filter(day -> day.getWeather().equals(typeOfWeather)).count());
     }
 
 

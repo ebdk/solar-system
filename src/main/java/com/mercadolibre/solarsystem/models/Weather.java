@@ -5,8 +5,6 @@ public class Weather {
     private TypeOfWeather weather;
     private double precipitation;
 
-
-
     public enum TypeOfWeather {
         RAINY,
         DRY,

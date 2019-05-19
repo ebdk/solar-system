@@ -16,22 +16,10 @@ public class DayEntity {
     private String weather;
     private double precipiation;
 
-    public DayEntity(Long date, String weather, double precipiation) {
-        this.date = date;
-        this.weather = weather;
-        this.precipiation = precipiation;
-    }
-
-    public DayEntity(DetailedDayDto day) {
-        this.date = Long.valueOf(day.getDate());
-        this.weather = day.getWeather();
-        this.precipiation = day.getPrecipiation();
-    }
-
     public DayEntity(Day day) {
         this.date = Long.valueOf(day.getDate());
-        this.weather = day.getWeatherTypeString();
-        this.precipiation = day.getWeatherPrecipitation();
+        this.weather = day.getWeather().toString();
+        this.precipiation = day.getPrecipitation();
     }
 
     public DayEntity() {

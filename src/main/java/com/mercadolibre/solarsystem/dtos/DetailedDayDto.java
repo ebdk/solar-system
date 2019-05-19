@@ -6,7 +6,7 @@ public class DetailedDayDto extends com.mercadolibre.solarsystem.dtos.DayDto {
 
     public DetailedDayDto(com.mercadolibre.solarsystem.models.Day day) {
         super(day);
-        this.precipiation = day.getWeatherPrecipitation();
+        this.precipiation = day.getPrecipitation();
     }
 
     public DetailedDayDto() {

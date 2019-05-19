@@ -1,7 +1,6 @@
 package com.mercadolibre.solarsystem.services.impl;
 
 import com.google.common.collect.ImmutableMap;
-import com.mercadolibre.solarsystem.dtos.DetailedDayDto;
 import com.mercadolibre.solarsystem.dtos.MessageResponse;
 import com.mercadolibre.solarsystem.entity.DayEntity;
 import com.mercadolibre.solarsystem.models.Day;
@@ -11,7 +10,6 @@ import com.mercadolibre.solarsystem.services.DayService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import javax.annotation.PostConstruct;
 import java.util.ArrayList;
 import java.util.List;
 
