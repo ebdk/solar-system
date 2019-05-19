@@ -4,8 +4,6 @@ import com.mercadolibre.solarsystem.dtos.DetailedDayDto;
 import com.mercadolibre.solarsystem.models.Day;
 
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
 @Entity
@@ -32,7 +30,7 @@ public class DayEntity {
 
     public DayEntity(Day day) {
         this.date = Long.valueOf(day.getDate());
-        this.weather = day.getWeatherType();
+        this.weather = day.getWeatherTypeString();
         this.precipiation = day.getWeatherPrecipitation();
     }
 

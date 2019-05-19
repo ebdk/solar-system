@@ -4,12 +4,15 @@ import com.mercadolibre.solarsystem.dtos.DayDto;
 import com.mercadolibre.solarsystem.dtos.DetailedDayDto;
 import com.mercadolibre.solarsystem.dtos.PredictionDto;
 import com.mercadolibre.solarsystem.models.Day;
+import com.mercadolibre.solarsystem.models.Weather.TypeOfWeather;
 import com.mercadolibre.solarsystem.services.DayService;
 import com.mercadolibre.solarsystem.services.SolarSystemService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+
+import static com.mercadolibre.solarsystem.models.Weather.TypeOfWeather.RAINY;
 
 @Service
 public class SolarSystemServiceImpl implements SolarSystemService {
@@ -24,21 +27,19 @@ public class SolarSystemServiceImpl implements SolarSystemService {
 
     @Override
     public PredictionDto weatherForecast() {
-        int rainyDays = 0;
-        int droughtDays = 0;
-        int optimalDays = 0;
         List<Day> days = dayService.getAll();
-        for (Day day : days) {
-            switch (day.getWeatherType()) {
-                case "RAINY" : rainyDays++;
-                break;
-                case "DRY" : droughtDays++;
-                break;
-                case "IDEAL" : optimalDays++;
-                break;
-            }
+        Day mostRainyDay = new Day(0, RAINY, 0);
+        for(Day day : days) {
+            mostRainyDay = (day.getWeatherPrecipitation() > mostRainyDay.getWeatherPrecipitation()) ? day : mostRainyDay;
         }
-        return new PredictionDto(optimalDays, droughtDays, rainyDays, new DetailedDayDto(days.get(0)));
+        return new PredictionDto(countWeatherTypeOccurrences(days, TypeOfWeather.IDEAL),
+                countWeatherTypeOccurrences(days, TypeOfWeather.DRY),
+                countWeatherTypeOccurrences(days, TypeOfWeather.RAINY),
+                new DetailedDayDto(mostRainyDay));
+    }
+
+    private int countWeatherTypeOccurrences(List<Day> days, TypeOfWeather typeOfWeather) {
+        return Math.toIntExact(days.stream().filter(day -> day.getWeatherType().equals(typeOfWeather)).count());
     }
 
 

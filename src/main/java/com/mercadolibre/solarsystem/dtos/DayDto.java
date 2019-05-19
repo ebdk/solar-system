@@ -7,7 +7,7 @@ public class DayDto {
 
     public DayDto(com.mercadolibre.solarsystem.models.Day day) {
         this.date = day.getDate();
-        this.weather = day.getWeatherType();
+        this.weather = day.getWeatherTypeString();
     }
 
     public DayDto() {

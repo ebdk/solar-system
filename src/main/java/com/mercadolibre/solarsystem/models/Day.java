@@ -1,5 +1,7 @@
 package com.mercadolibre.solarsystem.models;
 
+import com.mercadolibre.solarsystem.models.Weather.TypeOfWeather;
+
 public class Day {
 
     private int date;
@@ -15,7 +17,7 @@ public class Day {
         this.weather = new Weather(entity.getWeather(), entity.getPrecipiation());
     }
 
-    public Day(int date, Weather.TypeOfWeather weather, double precipitation) {
+    public Day(int date, TypeOfWeather weather, double precipitation) {
         this.date = date;
         this.weather = new Weather(weather, precipitation);
     }
@@ -24,8 +26,12 @@ public class Day {
         return date;
     }
 
-    public String getWeatherType() {
+    public String getWeatherTypeString() {
         return weather.getWeather().toString();
+    }
+
+    public TypeOfWeather getWeatherType() {
+        return weather.getWeather();
     }
 
     public double getWeatherPrecipitation() {

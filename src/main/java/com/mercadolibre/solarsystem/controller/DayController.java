@@ -1,11 +1,13 @@
 package com.mercadolibre.solarsystem.controller;
 
-import com.mercadolibre.solarsystem.dtos.DetailedDayDto;
 import com.mercadolibre.solarsystem.dtos.MessageResponse;
 import com.mercadolibre.solarsystem.models.Day;
 import com.mercadolibre.solarsystem.services.DayService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
@@ -19,6 +21,11 @@ public class DayController {
     @GetMapping
     public List<Day> getAll() {
         return service.getAll();
+    }
+
+    @PostMapping
+    public MessageResponse injectDays() {
+        return service.mockDays();
     }
 
 }

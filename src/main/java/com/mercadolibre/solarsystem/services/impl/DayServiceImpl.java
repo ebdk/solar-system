@@ -36,7 +36,6 @@ public class DayServiceImpl implements DayService {
         return days;
     }
 
-    @PostConstruct
     @Override
     public MessageResponse mockDays() {
         ImmutableMap<Integer, TypeOfWeather> map = ImmutableMap.of(0, TypeOfWeather.COMMON,
@@ -44,7 +43,7 @@ public class DayServiceImpl implements DayService {
                 2, TypeOfWeather.RAINY,
                 3, TypeOfWeather.DRY);
         for(int i = 1; i <= 3650; i++) {
-            int numberForPrecipitacion = (int)(Math.random() * ((3000) + 1));
+            int numberForPrecipitacion = (int)(Math.random() * ((1825) + 1));
             int numberForChoosenEnum = (int)(Math.random() * ((3) + 1));
             Day day = new Day(i, map.get(numberForChoosenEnum), numberForPrecipitacion);
             dayRepository.save(new DayEntity(day));

@@ -28,7 +28,7 @@ public class SolarSystemController {
     @GetMapping(path="/{day}", produces = org.springframework.http.MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.OK)
     public ResponseEntity<DayDto> forecastDay(
-            @ApiParam(value = "The day that will be predicted", allowableValues = "range[1,3600]", required = true)
+            @ApiParam(value = "The day that will be predicted", allowableValues = "range[1,3650]", required = true)
             @PathVariable("day") int day) {
         return ResponseEntity.ok(service.predictWeather(day));
     }
