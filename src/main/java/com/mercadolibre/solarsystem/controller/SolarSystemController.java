@@ -12,6 +12,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
+
 @RestController
 @RequestMapping("/api/weather")
 public class SolarSystemController {
@@ -25,7 +27,7 @@ public class SolarSystemController {
     @ApiResponses({
             @ApiResponse(code = 200, message = "The forecast was calculated successfully", response = DayDto.class),
     })
-    @GetMapping(path="/{day}", produces = org.springframework.http.MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(path="/{day}", produces = APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.OK)
     public ResponseEntity<DayDto> forecastDay(
             @ApiParam(value = "The day that will be predicted", allowableValues = "range[1,3650]", required = true)
@@ -40,7 +42,7 @@ public class SolarSystemController {
     @ApiResponses({
             @ApiResponse(code = 200, message = "The prediction was calculated successfully", response = PredictionDto.class),
     })
-    @GetMapping(produces = org.springframework.http.MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(produces = APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.OK)
     public ResponseEntity<PredictionDto> weatherForecast() {
         return ResponseEntity.ok(service.weatherForecast());

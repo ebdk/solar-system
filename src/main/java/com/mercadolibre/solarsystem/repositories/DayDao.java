@@ -5,5 +5,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface DayDAO extends JpaRepository<DayEntity, Long> {
+public interface DayDao extends JpaRepository<DayEntity, Long> {
 }

@@ -1,10 +1,12 @@
 package com.mercadolibre.solarsystem.dtos;
 
-public class DetailedDayDto extends com.mercadolibre.solarsystem.dtos.DayDto {
+import com.mercadolibre.solarsystem.models.Day;
+
+public class DetailedDayDto extends DayDto {
 
     private double precipiation;
 
-    public DetailedDayDto(com.mercadolibre.solarsystem.models.Day day) {
+    public DetailedDayDto(Day day) {
         super(day);
         this.precipiation = day.getPrecipitation();
     }

@@ -1,9 +1,12 @@
 package com.mercadolibre.solarsystem.services;
 
+import com.mercadolibre.solarsystem.dtos.DayDto;
+import com.mercadolibre.solarsystem.dtos.PredictionDto;
+
 public interface SolarSystemService {
 
-    com.mercadolibre.solarsystem.dtos.DayDto predictWeather(int day);
+    DayDto predictWeather(int day);
 
-    com.mercadolibre.solarsystem.dtos.PredictionDto weatherForecast();
+    PredictionDto weatherForecast();
 
 }

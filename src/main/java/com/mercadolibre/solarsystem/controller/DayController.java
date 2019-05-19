@@ -1,6 +1,6 @@
 package com.mercadolibre.solarsystem.controller;
 
-import com.mercadolibre.solarsystem.dtos.MessageResponse;
+import com.mercadolibre.solarsystem.dtos.MessageDto;
 import com.mercadolibre.solarsystem.models.Day;
 import com.mercadolibre.solarsystem.services.DayService;
 import io.swagger.annotations.ApiOperation;
@@ -39,7 +39,7 @@ public class DayController {
             @ApiResponse(code = 200, message = "The days were injected successfully"),
     })
     @PostMapping(produces = APPLICATION_JSON_VALUE)
-    public ResponseEntity<MessageResponse> injectDays() {
+    public ResponseEntity<MessageDto> injectDays() {
         return ResponseEntity.ok(service.mockDays());
     }
 

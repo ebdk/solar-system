@@ -2,34 +2,34 @@ package com.mercadolibre.solarsystem.dtos;
 
 public class PredictionDto {
 
-    private int periodOfOptimalDays;
-    private int periodOfDroughtDays;
-    private int periodOfRainyDays;
+    private int optimalDays;
+    private int droughtDays;
+    private int rainyDays;
     private DetailedDayDto mostRainyday;
 
-    public PredictionDto(int periodOfOptimalDays, int periodOfDroughtDays, int periodOfRainyDays, com.mercadolibre.solarsystem.dtos.DetailedDayDto mostRainyday) {
-        this.periodOfOptimalDays = periodOfOptimalDays;
-        this.periodOfDroughtDays = periodOfDroughtDays;
-        this.periodOfRainyDays = periodOfRainyDays;
+    public PredictionDto(int optimalDays, int droughtDays, int rainyDays, DetailedDayDto mostRainyday) {
+        this.optimalDays = optimalDays;
+        this.droughtDays = droughtDays;
+        this.rainyDays = rainyDays;
         this.mostRainyday = mostRainyday;
     }
 
     public PredictionDto() {
     }
 
-    public int getPeriodOfOptimalDays() {
-        return periodOfOptimalDays;
+    public int getOptimalDays() {
+        return optimalDays;
     }
 
-    public int getPeriodOfDroughtDays() {
-        return periodOfDroughtDays;
+    public int getDroughtDays() {
+        return droughtDays;
     }
 
-    public int getPeriodOfRainyDays() {
-        return periodOfRainyDays;
+    public int getRainyDays() {
+        return rainyDays;
     }
 
-    public com.mercadolibre.solarsystem.dtos.DetailedDayDto getMostRainyday() {
+    public DetailedDayDto getMostRainyday() {
         return mostRainyday;
     }
 }

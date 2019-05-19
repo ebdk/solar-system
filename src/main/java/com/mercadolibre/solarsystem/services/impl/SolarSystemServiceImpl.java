@@ -42,5 +42,4 @@ public class SolarSystemServiceImpl implements SolarSystemService {
         return Math.toIntExact(days.stream().filter(day -> day.getWeather().equals(typeOfWeather)).count());
     }
 
-
 }

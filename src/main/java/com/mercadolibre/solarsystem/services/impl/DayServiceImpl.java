@@ -1,11 +1,11 @@
 package com.mercadolibre.solarsystem.services.impl;
 
 import com.google.common.collect.ImmutableMap;
-import com.mercadolibre.solarsystem.dtos.MessageResponse;
+import com.mercadolibre.solarsystem.dtos.MessageDto;
 import com.mercadolibre.solarsystem.entity.DayEntity;
 import com.mercadolibre.solarsystem.models.Day;
 import com.mercadolibre.solarsystem.models.Weather.TypeOfWeather;
-import com.mercadolibre.solarsystem.repositories.DayDAO;
+import com.mercadolibre.solarsystem.repositories.DayDao;
 import com.mercadolibre.solarsystem.services.DayService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -17,7 +17,7 @@ import java.util.List;
 public class DayServiceImpl implements DayService {
 
     @Autowired
-    private DayDAO dayRepository;
+    private DayDao dayRepository;
 
     @Override
     public Day getDay(Long date) {
@@ -35,7 +35,7 @@ public class DayServiceImpl implements DayService {
     }
 
     @Override
-    public MessageResponse mockDays() {
+    public MessageDto mockDays() {
         ImmutableMap<Integer, TypeOfWeather> map = ImmutableMap.of(0, TypeOfWeather.COMMON,
                 1, TypeOfWeather.IDEAL,
                 2, TypeOfWeather.RAINY,
@@ -47,10 +47,7 @@ public class DayServiceImpl implements DayService {
             dayRepository.save(new DayEntity(day));
         }
 
-
-        return new MessageResponse("Added 3650 mocked days.");
+        return new MessageDto("Added 3650 mocked days.");
     }
-
-
 
 }

@@ -1,6 +1,5 @@
 package com.mercadolibre.solarsystem.entity;
 
-import com.mercadolibre.solarsystem.dtos.DetailedDayDto;
 import com.mercadolibre.solarsystem.models.Day;
 
 import javax.persistence.Entity;
@@ -9,7 +8,6 @@ import javax.persistence.Id;
 @Entity
 public class DayEntity {
 
-    //ATTRIBUTES
     @Id
     private Long date;
 

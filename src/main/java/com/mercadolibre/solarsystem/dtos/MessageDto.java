@@ -1,14 +1,14 @@
 package com.mercadolibre.solarsystem.dtos;
 
-public class MessageResponse implements Response {
+public class MessageDto {
 
     private String message;
 
-    public MessageResponse(String message) {
+    public MessageDto(String message) {
         this.message = message;
     }
 
-    public MessageResponse() {
+    public MessageDto() {
     }
 
     public String getMessage() {
