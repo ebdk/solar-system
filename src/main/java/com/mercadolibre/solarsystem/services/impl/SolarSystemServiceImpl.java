@@ -4,7 +4,6 @@ import com.mercadolibre.solarsystem.dtos.DayDto;
 import com.mercadolibre.solarsystem.dtos.DetailedDayDto;
 import com.mercadolibre.solarsystem.dtos.PredictionDto;
 import com.mercadolibre.solarsystem.models.Day;
-import com.mercadolibre.solarsystem.models.SolarSystem;
 import com.mercadolibre.solarsystem.services.DayService;
 import com.mercadolibre.solarsystem.services.SolarSystemService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,9 +18,6 @@ public class SolarSystemServiceImpl implements SolarSystemService {
 
     @Autowired
     private DayService dayService;
-
-    @Autowired
-    private SolarSystem solarSystem;
 
     @Override
     public DayDto predictWeather(int day) {

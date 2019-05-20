@@ -21,10 +21,11 @@ public class PredictionServiceImpl implements PredictionService {
 
     private CommonCondition defaultCondition;
 
-    public PredictionServiceImpl(SolarSystem solarSystem, List<WeatherCondition> weatherConditions, CommonCondition defaultCondition) {
+    public PredictionServiceImpl(SolarSystem solarSystem, List<WeatherCondition> weatherConditions, CommonCondition defaultCondition, DayService dayService) {
         this.solarSystem = solarSystem;
         this.weatherConditions = weatherConditions;
         this.defaultCondition = defaultCondition;
+        this.dayService = dayService;
     }
 
     @Override
