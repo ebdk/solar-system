@@ -1,5 +1,6 @@
 package com.mercadolibre.solarsystem.services.impl;
 
+import com.mercadolibre.solarsystem.dtos.MessageDto;
 import com.mercadolibre.solarsystem.models.Day;
 import com.mercadolibre.solarsystem.models.SolarSystem;
 import com.mercadolibre.solarsystem.models.conditions.CommonCondition;
@@ -29,11 +30,13 @@ public class PredictionServiceImpl implements PredictionService {
     }
 
     @Override
-    public void fullfilPrediction(int days) {
+    public MessageDto fullfilPrediction(int days) {
         for(int date = 1; date <= days; date++) {
             dayService.saveDay(predictDay(date));
             solarSystem.movePlanetsGivenDays(date);
         }
+        solarSystem.reset();
+        return new MessageDto("Predicted 3650 days.");
     }
 
     private Day predictDay(int date) {

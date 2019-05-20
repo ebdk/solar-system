@@ -11,6 +11,7 @@ public class Planet {
     private double distanceFromSun; //radius
     private int rotationSpeed; //angularVelocity
     private Point2D position;
+    private double originalDistance;
 
     public enum MovementType {
         CLOCKWISE(-1),
@@ -30,6 +31,7 @@ public class Planet {
     public Planet(String name, double distanceFromSun, int rotationSpeed, MovementType movementType) {
         this.name = name;
         this.movementType = movementType;
+        this.originalDistance = distanceFromSun;
         this.distanceFromSun = distanceFromSun;
         this.rotationSpeed = rotationSpeed;
         this.position = new Point2D.Double(distanceFromSun, 0.0d);
@@ -48,19 +50,15 @@ public class Planet {
         position = new Point2D.Double(x, y);
     }
 
-    public String getName() {
-        return name;
-    }
-
-    public double getDistanceFromSun() {
-        return distanceFromSun;
+    public void reset() {
+        this.position = new Point2D.Double(originalDistance, 0.0d);
     }
 
     public int getRotationSpeed() {
         return rotationSpeed * movementType.getMultiplier();
     }
 
-    public java.awt.geom.Point2D getPosition() {
+    public Point2D getPosition() {
         return position;
     }
 }

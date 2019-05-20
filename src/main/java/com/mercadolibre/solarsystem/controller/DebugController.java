@@ -3,6 +3,7 @@ package com.mercadolibre.solarsystem.controller;
 import com.mercadolibre.solarsystem.dtos.MessageDto;
 import com.mercadolibre.solarsystem.models.Day;
 import com.mercadolibre.solarsystem.services.DayService;
+import com.mercadolibre.solarsystem.services.PredictionService;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
@@ -16,11 +17,14 @@ import static org.springframework.http.HttpStatus.OK;
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 
 @RestController
-@RequestMapping("/api/day")
-public class DayController {
+@RequestMapping("/api/debug")
+public class DebugController {
 
     @Autowired
-    private DayService service;
+    private DayService dayService;
+
+    @Autowired
+    private PredictionService predictionService;
 
     @ApiOperation(
             value = "Retreives all the days")
@@ -30,17 +34,29 @@ public class DayController {
     @GetMapping(produces = APPLICATION_JSON_VALUE)
     @ResponseStatus(OK)
     public ResponseEntity<List<Day>> getAll() {
-        return ResponseEntity.ok(service.getAll());
+        return ResponseEntity.ok(dayService.getAll());
     }
 
     @ApiOperation(
-            value = "Injects all the days")
+            value = "Injects mocked days")
+
     @ApiResponses({
-            @ApiResponse(code = 200, message = "The days were injected successfully"),
+            @ApiResponse(code = 200, message = "The mocked days were injected successfully"),
+    })
+    @PostMapping(path="/mock", produces = APPLICATION_JSON_VALUE)
+    public ResponseEntity<MessageDto> injectDays() {
+        return ResponseEntity.ok(dayService.mockDays());
+    }
+
+    @ApiOperation(
+            value = "Predict days",
+            notes = "Calculates the forecast of the weather condition of the next 3600 days")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "The days were predicted successfully"),
     })
     @PostMapping(produces = APPLICATION_JSON_VALUE)
-    public ResponseEntity<MessageDto> injectDays() {
-        return ResponseEntity.ok(service.mockDays());
+    public ResponseEntity<MessageDto> predictDays() {
+        return ResponseEntity.ok(predictionService.fullfilPrediction(3650));
     }
 
 }

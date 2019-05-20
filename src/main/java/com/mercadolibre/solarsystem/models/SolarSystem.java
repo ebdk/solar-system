@@ -25,8 +25,6 @@ public class SolarSystem {
         return planets.stream().map(Planet::getPosition).collect(Collectors.toList());
     }
 
-
-
     public Point2D getSunPosition() {
         return sunPosition;
     }
@@ -35,4 +33,8 @@ public class SolarSystem {
         return day;
     }
 
+    public void reset() {
+        this.day = 0;
+        planets.forEach(planet -> planet.reset());
+    }
 }

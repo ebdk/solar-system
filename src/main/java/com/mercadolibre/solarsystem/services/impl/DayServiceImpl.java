@@ -4,6 +4,7 @@ import com.google.common.collect.ImmutableMap;
 import com.mercadolibre.solarsystem.dtos.MessageDto;
 import com.mercadolibre.solarsystem.entity.DayEntity;
 import com.mercadolibre.solarsystem.models.Day;
+import com.mercadolibre.solarsystem.models.Weather.Type;
 import com.mercadolibre.solarsystem.repositories.DayDao;
 import com.mercadolibre.solarsystem.services.DayService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,17 +41,17 @@ public class DayServiceImpl implements DayService {
 
     @Override
     public MessageDto mockDays() {
-        ImmutableMap<Integer, com.mercadolibre.solarsystem.models.Weather.Type> map = ImmutableMap.of(0, com.mercadolibre.solarsystem.models.Weather.Type.COMMON,
-                1, com.mercadolibre.solarsystem.models.Weather.Type.IDEAL,
-                2, com.mercadolibre.solarsystem.models.Weather.Type.RAINY,
-                3, com.mercadolibre.solarsystem.models.Weather.Type.DRY);
+        ImmutableMap<Integer, Type> map = ImmutableMap.of(0, Type.COMMON,
+                1, Type.IDEAL,
+                2, Type.RAINY,
+                3, Type.DRY);
         for(int i = 1; i <= 3650; i++) {
-            int numberForPrecipitacion = (int)(Math.random() * ((1825) + 1));
             int numberForChoosenEnum = (int)(Math.random() * ((3) + 1));
-            Day day = new Day(i, map.get(numberForChoosenEnum), numberForPrecipitacion);
+            Type choosenType = map.get(numberForChoosenEnum);
+            int numberForPrecipitacion = choosenType.equals(Type.RAINY) ? (int)(Math.random() * ((8241) + 1)) : choosenType.getDefaultPrecipitation();
+            Day day = new Day(i, choosenType, numberForPrecipitacion);
             dayRepository.save(new DayEntity(day));
         }
-
         return new MessageDto("Added 3650 mocked days.");
     }
 

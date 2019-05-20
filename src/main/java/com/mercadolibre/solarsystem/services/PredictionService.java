@@ -1,7 +1,9 @@
 package com.mercadolibre.solarsystem.services;
 
+import com.mercadolibre.solarsystem.dtos.MessageDto;
+
 public interface PredictionService {
 
-    void fullfilPrediction(int days);
+    MessageDto fullfilPrediction(int days);
 
 }
