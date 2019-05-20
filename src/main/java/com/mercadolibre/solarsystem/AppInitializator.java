@@ -14,7 +14,7 @@ class AppInitializator {
 
     @PostConstruct
     private void init() {
-        predictionService.fullfilPrediction(3600);
+        predictionService.fullfilPrediction(3650);
     }
 
 }

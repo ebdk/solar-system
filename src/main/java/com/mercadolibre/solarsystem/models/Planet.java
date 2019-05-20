@@ -32,7 +32,7 @@ public class Planet {
         this.movementType = movementType;
         this.distanceFromSun = distanceFromSun;
         this.rotationSpeed = rotationSpeed;
-        this.position = new Point2D.Double(distanceFromSun, 0.0);
+        this.position = new Point2D.Double(distanceFromSun, 0.0d);
     }
 
     public void moveGivenDays(int days) {

@@ -32,11 +32,11 @@ public class PredictionServiceImpl implements PredictionService {
     public void fullfilPrediction(int days) {
         for(int date = 1; date <= days; date++) {
             dayService.saveDay(predictDay(date));
+            solarSystem.movePlanetsGivenDays(date);
         }
     }
 
     private Day predictDay(int date) {
-        solarSystem.movePlanetsGivenDays(date);
         return new Day(date, weatherConditions.stream().filter(
                 condition -> condition.isOfCondition(solarSystem)
         ).findFirst().orElse(defaultCondition).getWeather(solarSystem));

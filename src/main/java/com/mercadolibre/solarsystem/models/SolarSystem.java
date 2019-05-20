@@ -12,9 +12,7 @@ public class SolarSystem {
 
     public void movePlanetsGivenDays(int days) {
         this.day = days;
-        for(Planet planet : planets) {
-            planet.moveGivenDays(days);
-        }
+        planets.forEach(planet -> planet.moveGivenDays(days));
     }
 
     public SolarSystem(List<Planet> planets) {
