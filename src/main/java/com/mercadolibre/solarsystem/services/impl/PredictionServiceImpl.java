@@ -41,7 +41,7 @@ public class PredictionServiceImpl implements PredictionService {
 
     private Day predictDay(int date) {
         return new Day(date, weatherConditions.stream().filter(
-                condition -> condition.isOfCondition(solarSystem)
+                condition -> condition.isOfCondition(solarSystem.getPlanetsPositions())
         ).findFirst().orElse(defaultCondition).getWeather(solarSystem));
     }
 }

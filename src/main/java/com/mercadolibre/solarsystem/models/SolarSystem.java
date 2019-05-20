@@ -7,7 +7,7 @@ import java.util.stream.Collectors;
 public class SolarSystem {
 
     private List<Planet> planets;
-    private Point2D sunPosition;
+    private static Point2D sunPosition;
     private int day;
 
     public void movePlanetsGivenDays(int days) {
@@ -18,14 +18,14 @@ public class SolarSystem {
     public SolarSystem(List<Planet> planets) {
         this.planets = planets;
         this.day = 0;
-        this.sunPosition = new Point2D.Double(0.0d, 0.0d);
+        sunPosition = new Point2D.Double(0.0d, 0.0d);
     }
 
     public List<Point2D> getPlanetsPositions() {
         return planets.stream().map(Planet::getPosition).collect(Collectors.toList());
     }
 
-    public Point2D getSunPosition() {
+    public static Point2D getSunPosition() {
         return sunPosition;
     }
 
@@ -35,6 +35,6 @@ public class SolarSystem {
 
     public void reset() {
         this.day = 0;
-        planets.forEach(planet -> planet.reset());
+        planets.forEach(Planet::reset);
     }
 }

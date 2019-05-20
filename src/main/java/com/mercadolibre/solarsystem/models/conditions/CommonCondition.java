@@ -1,6 +1,5 @@
 package com.mercadolibre.solarsystem.models.conditions;
 
-import com.mercadolibre.solarsystem.models.SolarSystem;
 import com.mercadolibre.solarsystem.models.Weather.Type;
 
 public class CommonCondition extends WeatherCondition {
@@ -10,7 +9,7 @@ public class CommonCondition extends WeatherCondition {
   }
 
   @Override
-  public boolean isOfCondition(SolarSystem solarSystem) {
+  public boolean isOfCondition(java.util.List<java.awt.geom.Point2D> solarSystem) {
     return false;
   }
 

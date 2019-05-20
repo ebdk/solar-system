@@ -20,11 +20,11 @@ public class RainyCondition extends WeatherCondition {
      * https://github.com/SebLague/Gamedev-Maths/blob/master/PointInTriangle.cs
      */
     @Override
-    public boolean isOfCondition(SolarSystem solarSystem) {
-        Point2D center = solarSystem.getSunPosition();
-        Point2D A = solarSystem.getPlanetsPositions().get(0);
-        Point2D B = solarSystem.getPlanetsPositions().get(1);
-        Point2D C = solarSystem.getPlanetsPositions().get(2);
+    public boolean isOfCondition(List<Point2D> points) {
+        Point2D center = SolarSystem.getSunPosition();
+        Point2D A = points.get(0);
+        Point2D B = points.get(1);
+        Point2D C = points.get(2);
 
         double s1 = C.getY() - A.getY();
         double s2 = C.getX() - A.getX();
