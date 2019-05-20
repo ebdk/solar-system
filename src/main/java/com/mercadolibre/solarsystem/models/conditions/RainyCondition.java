@@ -4,89 +4,52 @@ import com.mercadolibre.solarsystem.factories.WeatherFactory;
 import com.mercadolibre.solarsystem.models.SolarSystem;
 import com.mercadolibre.solarsystem.models.Weather;
 import com.mercadolibre.solarsystem.models.Weather.Type;
-import com.mercadolibre.solarsystem.utils.MathCalculationUtils;
 
 import java.awt.geom.Point2D;
+import java.util.List;
+
 
 public class RainyCondition extends WeatherCondition {
 
-  public RainyCondition(Type weatherType) {
-    super(weatherType);
-  }
-
-  @Override
-  public boolean isOfCondition(SolarSystem solarSystem) {
-    Point2D center = solarSystem.getSunPosition();
-    Point2D firstPlanetPosition = solarSystem.getPlanetsPositions().get(0);
-    Point2D secondPlanetPosition = solarSystem.getPlanetsPositions().get(1);
-    Point2D thirdPlanetPosition =solarSystem.getPlanetsPositions().get(2);
-    if (!doPlanetsFormATriangle(firstPlanetPosition, secondPlanetPosition, thirdPlanetPosition)) {
-      return false;
-    }
-    return isCenterInsidePlanetsTriangle(center, firstPlanetPosition, secondPlanetPosition, thirdPlanetPosition);
-  }
-
-  private boolean isCenterInsidePlanetsTriangle(Point2D center, Point2D firstPlanetPosition, Point2D secondPlanetPosition, Point2D thirdPlanetPosition) {
-    BarycentricCoordinate barycentricCoordinate = getBarycentricCoordinate(firstPlanetPosition,
-            secondPlanetPosition, thirdPlanetPosition, center);
-    return (0 <= barycentricCoordinate.getA() && barycentricCoordinate.getA() <= 1)
-        && (0 <= barycentricCoordinate.getB() && barycentricCoordinate.getB() <= 1)
-        && (0 <= barycentricCoordinate.getC() && barycentricCoordinate.getC() <= 1);
-  }
-
-  @Override
-  public Weather getWeather(SolarSystem solarSystem) {
-    Point2D firstPlanetPosition = solarSystem.getPlanetsPositions().get(0);
-    Point2D secondPlanetPosition = solarSystem.getPlanetsPositions().get(1);
-    Point2D thirdPlanetPosition = solarSystem.getPlanetsPositions().get(2);
-    double precipitation = MathCalculationUtils
-        .trianglePerimeter(firstPlanetPosition, secondPlanetPosition, thirdPlanetPosition);
-    return WeatherFactory.createRainyWeather(precipitation);
-  }
-
-  private boolean doPlanetsFormATriangle(Point2D firstPlanetPosition, Point2D secondPlanetPosition, Point2D thirdPlanetPosition) {
-    return
-        MathCalculationUtils.triangleArea(firstPlanetPosition, secondPlanetPosition, thirdPlanetPosition) != 0;
-  }
-
-  private BarycentricCoordinate getBarycentricCoordinate(final Point2D point1, final Point2D point2,
-                                                         final Point2D point3, final Point2D p) {
-    double denominator = ((point2.getY() - point3.getY())
-        * (point1.getX() - point3.getX())
-        + (point3.getX() - point2.getX())
-        * (point1.getY() - point3.getY()));
-
-    double a = ((point2.getY() - point3.getY()) * (p.getX() - point3.getX())
-        + (point3.getX() - point2.getX()) * (p.getY() - point3.getY()))
-        / denominator;
-
-    double b = ((point3.getY() - point1.getY()) * (p.getX() - point3.getX())
-        + (point1.getX() - point3.getX()) * (p.getY() - point3.getY()))
-        / denominator;
-
-    double c = 1 - a - b;
-    return new BarycentricCoordinate(a, b, c);
-  }
-
-  private class BarycentricCoordinate {
-
-    double a, b, c;
-
-    public BarycentricCoordinate(double a, double b, double c) {
+    public RainyCondition(Type weatherType) {
+        super(weatherType);
     }
 
-    public double getA() {
-      return a;
+    /**
+     * https://www.youtube.com/watch?v=HYAgJN3x4GA
+     * https://github.com/SebLague/Gamedev-Maths/blob/master/PointInTriangle.cs
+     */
+    @Override
+    public boolean isOfCondition(SolarSystem solarSystem) {
+        Point2D center = solarSystem.getSunPosition();
+        Point2D A = solarSystem.getPlanetsPositions().get(0);
+        Point2D B = solarSystem.getPlanetsPositions().get(1);
+        Point2D C = solarSystem.getPlanetsPositions().get(2);
+
+        double s1 = C.getY() - A.getY();
+        double s2 = C.getX() - A.getX();
+        double s3 = B.getY() - A.getY();
+        double s4 = center.getY() - A.getY();
+
+        double w1 = ( (A.getX() * s1 ) + (s4 * s2) - ( center.getX() * s1) ) / ( (s3 * s2 ) - ( B.getX() - A.getX() ) * s1) ;
+        double w2 = ( s4 - (w1 * s3) ) / s1;
+        return w1 >= 0 && w2 >= 0 && (w1 + w2) <= 1;
     }
 
-    public double getB() {
-      return b;
+    @Override
+    public Weather getWeather(SolarSystem solarSystem) {
+        double precipitation = calculatePerimeter(solarSystem.getPlanetsPositions());
+        return WeatherFactory.createRainyWeather(precipitation);
     }
 
-    public double getC() {
-      return c;
+    /**
+     * https://www.quora.com/How-do-you-find-a-triangles-perimeter-using-coordinates
+     */
+    private double calculatePerimeter(List<Point2D> planetsPositions) {
+        Point2D A = planetsPositions.get(0);
+        Point2D B = planetsPositions.get(1);
+        Point2D C = planetsPositions.get(2);
+        return A.distance(B) + B.distance(C) + C.distance(A);
     }
-
-  }
 
 }

@@ -25,6 +25,8 @@ public class SolarSystem {
         return planets.stream().map(Planet::getPosition).collect(Collectors.toList());
     }
 
+
+
     public Point2D getSunPosition() {
         return sunPosition;
     }
