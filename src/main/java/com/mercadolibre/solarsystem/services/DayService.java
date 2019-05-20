@@ -9,6 +9,8 @@ public interface DayService {
 
     Day getDay(Long date);
 
+    void saveDay(com.mercadolibre.solarsystem.models.Day day);
+
     List<Day> getAll();
 
     MessageDto mockDays();

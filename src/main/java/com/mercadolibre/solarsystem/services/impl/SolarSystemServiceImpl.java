@@ -4,7 +4,7 @@ import com.mercadolibre.solarsystem.dtos.DayDto;
 import com.mercadolibre.solarsystem.dtos.DetailedDayDto;
 import com.mercadolibre.solarsystem.dtos.PredictionDto;
 import com.mercadolibre.solarsystem.models.Day;
-import com.mercadolibre.solarsystem.models.Weather.TypeOfWeather;
+import com.mercadolibre.solarsystem.models.SolarSystem;
 import com.mercadolibre.solarsystem.services.DayService;
 import com.mercadolibre.solarsystem.services.SolarSystemService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,13 +12,16 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
-import static com.mercadolibre.solarsystem.models.Weather.TypeOfWeather.RAINY;
+import static com.mercadolibre.solarsystem.models.Weather.Type.RAINY;
 
 @Service
 public class SolarSystemServiceImpl implements SolarSystemService {
 
     @Autowired
     private DayService dayService;
+
+    @Autowired
+    private SolarSystem solarSystem;
 
     @Override
     public DayDto predictWeather(int day) {
@@ -32,14 +35,14 @@ public class SolarSystemServiceImpl implements SolarSystemService {
         for(Day day : days) {
             mostRainyDay = (day.getPrecipitation() > mostRainyDay.getPrecipitation()) ? day : mostRainyDay;
         }
-        return new PredictionDto(countWeatherTypeOccurrences(days, TypeOfWeather.IDEAL),
-                countWeatherTypeOccurrences(days, TypeOfWeather.DRY),
-                countWeatherTypeOccurrences(days, TypeOfWeather.RAINY),
+        return new PredictionDto(countWeatherTypeOccurrences(days, com.mercadolibre.solarsystem.models.Weather.Type.IDEAL),
+                countWeatherTypeOccurrences(days, com.mercadolibre.solarsystem.models.Weather.Type.DRY),
+                countWeatherTypeOccurrences(days, com.mercadolibre.solarsystem.models.Weather.Type.RAINY),
                 new DetailedDayDto(mostRainyDay));
     }
 
-    private int countWeatherTypeOccurrences(List<Day> days, TypeOfWeather typeOfWeather) {
-        return Math.toIntExact(days.stream().filter(day -> day.getWeather().equals(typeOfWeather)).count());
+    private int countWeatherTypeOccurrences(List<Day> days, com.mercadolibre.solarsystem.models.Weather.Type type) {
+        return Math.toIntExact(days.stream().filter(day -> day.getWeather().equals(type)).count());
     }
 
 }
